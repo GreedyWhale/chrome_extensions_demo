@@ -1,0 +1,23 @@
+{
+  "name": "HelloExtensions",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Base Level Extension",
+  "browser_action": {
+    "default_popup": "hello.html",
+    "default_icon": {
+      "16": "images/logo16.png",
+      "24": "images/logo24.png",
+      "32": "images/logo32.png"
+    }
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1",
+        "mac": "MacCtrl+Shift+1"
+      },
+      "description": "Opens hello.html"
+    }
+  }
+}
