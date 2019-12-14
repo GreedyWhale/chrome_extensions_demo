@@ -31,7 +31,8 @@ manifest的版本号，从 Chrome 18 开始必须为2，必填。
 ---
 
 ### browser_action
-browser_action的值为一个对象，该字段规定扩展的图标放在Chrome的工具栏中（地址栏的左边）
+browser_action的值为一个对象，它包含了"default_icon", "default_title", "default_popup"这三个属性，
+它会让扩展的图标出现在Chrome的工具栏上（地址栏左边），用该字段定义的扩展图标默认在任何页面都可用。
 
 ```JSON
 "browser_action": {

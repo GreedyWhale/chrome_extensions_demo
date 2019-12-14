@@ -19,3 +19,5 @@ chrome 扩展程序学习笔记
 #### 二. DEMO 合集
 
 1. [HelloExtensions](/HelloExtensions/README.md)
+
+2. [GettingStartedExample](/GettingStartedExample/README.md)
