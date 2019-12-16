@@ -1,15 +1,80 @@
-### HelloExtensions
+### Hello Extensions
 
-这个项目来源于官方文档
 
-知识点：
+最近需要开发一个Chrome插件，看了一些教程，还是决定跟着官方教程学习。
 
-1. chrome 扩展使用HTML、CSS、JavaScript进行开发。
-2. 每个扩展都必须有manifest.json，可理解为该文件是整个扩展的配置文件。
-3. manifest.json必须含有这三个字段：
-   - name：扩展名
-   - version：扩展版本号，不能以0开头，随着版本更新，手动递增。
-   - manifest_version：manifest文件版本，从chrome 18 开始必须2。
-4. manifest.json字段
-    - browser_action，用于工具栏相关配置
-    - commands，用于配置快捷键（命令）
+
+### 一. 项目搭建
+
+1. 新建HelloExtensions文件夹，作为项目目录
+2. 在项目目录中创建manifest.json文件
+    ```
+    {
+        "name": "Hello Extensions",
+        "description" : "Base Level Extension",
+        "version": "1.0",
+        "manifest_version": 2,
+        "browser_action": {
+            "default_popup": "hello.html",
+            "default_icon": {
+                "16": "images/logo16.png",
+                "24": "images/logo24.png",
+                "32": "images/logo32.png"
+            }
+        },
+        "commands": {
+            "_execute_browser_action": {
+                "suggested_key": {
+                    "default": "Ctrl+Shift+1",
+                    "mac": "MacCtrl+Shift+1"
+                },
+                "description": "Opens hello.html"
+            }
+        }
+    }
+    ```
+3. 项目目录中创建hello.html
+    ```
+    <html>
+        <body>
+            <h1>Hello Extensions</h1>
+        </body>
+    </html>
+    ```
+4. 现在项目目录看起来是这样的：
+    ![](../images/1.png)
+
+### 二. 查看效果
+
+1. 在Chrome的地址栏里输入：chrome://extensions
+2. 在页面的左上角开启开发者模式：
+    ![](../images/2.png)
+3. 开启开发者模式后，页面上就会出现`加载已解压的扩展程序`这个按钮，点击这个按钮选择之前的项目文件夹，就会出现：
+    ![](../images/3.png)
+4. 在Chrome的地址栏左侧可以看到这个扩展程序的图标，点击这个图标，或者用快捷键`Ctrl+Shift+1`，就可以看到hello.html这个页面：
+    ![](../images/4.png)
+
+### 三. 总结
+
+这个项目来源于官方文档，非常简单，总结下学习到的知识点：
+
+1. Chrome 扩展程序使用基本的web技术进行开发：HTML、JavaScript、CSS
+2. 每个扩展程序都必须有manifest.json这个文件，manifest.json就像是项目的配置文件
+3. manifest.json必须包含的字段：
+    - manifest_version：从Chrome 18开始这个值必须为2，所以一般填2就可以了
+    - name：扩展程序的名字
+    - version：扩展程序的版本号，不能以0开头，以下都是合法值：
+        ```
+        "version": "1"
+        "version": "1.0"
+        "version": "2.10.2"
+        "version": "3.1.2.4567"
+        ```
+       每个区间取值范围是：0 到 65535。
+4. manifest.json中除了必填的那三个字段之外，这个项目还涉及到了以下字段：
+    - description：扩展程序的描述
+    - browser_action：Chrome 的扩展程序有所有页面都可以用的，也有指定页面才可以用的，比如Vue、React的调试工具，它在特定的页面才可以用，browser_action这个字段则是定义扩展程序在所有的页面上都可以用，与之对应的是page_action，它规定了扩展程序在满足特定条件的页面才可用，browser_action包含三个属性：
+        - default_icon：用于定义显示在Chrome 工具栏（地址栏左侧）的图标路径，可以传入多个尺寸的图标，Chrome会选择最合适的用，图标的尺寸最好是能填充满16 * 16 dip (dip是 设备独立像素 的意思)
+        - default_popup：鼠标点击工具栏上扩展程序图标要展示的页面路径
+        - default_title：鼠标悬浮在工具栏上扩展程序图标要展示的文字
+    - commands：用于定义一些快捷键的字段，这个项目中有用到_execute_browser_action这个属性，这个属性中定义的快捷键的效果就和用鼠标点击工具栏上扩展程序图标一样，我在测试的时候发现，如果定义的快捷键和现有的有冲突，那么它是不会生效的，除了_execute_browser_action之外还有_execute_page_action这个属性，虽然这个项目没有用到，但是大概也能猜到，它是用于定义page_action的这个字段的快捷键，还可以自己定义一些其他的快捷键，目前我还没有用过，暂时就先不写了。
